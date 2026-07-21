@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happy Birthday</title>
+</head>
+<body style="margin:0; background:linear-gradient(135deg,#ff9a9e,#fad0c4); display:flex; justify-content:center; align-items:center; height:100vh;">
+ 
+
+    <audio id="bgMusic" autoplay loop>
+        <source src="{% static 'music/first.mp3' %}" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.5;
+
+        document.body.addEventListener("click", function () {
+            music.play();
+        }, { once: true });
+    </script>
+    <div style="background:white; padding:40px; border-radius:20px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.3);">
+
+        <h1>🎂 Happy Birthday 🎂</h1>
+
+        <h2>Yogi Ma ❤️</h2>
+
+        <p>Welcome to your birthday surprise.</p>
+
+        <a href="{% url 'letter' %}">
+            <button>Open Surprise 🎁</button>
+        </a>
+    </div>
+
+</body>
+</html>

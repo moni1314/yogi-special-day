@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Video ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 80%;
+            max-width: 750px;
+            border-radius: 20px;
+            border: 8px solid white;
+            box-shadow: 0 12px 30px rgba(0,0,0,.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🎥 Special Memories ❤️</h1>
+
+        <video id="videoPlayer" controls autoplay>
+            <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
+        </video>
+
+    </div>
+
+    <script>
+
+const videos = [
+    "{% static 'videos/video1.mp4' %}",
+    "{% static 'videos/video2.mp4' %}"
+];
+
+let current = 0;
+
+        const player = document.getElementById("videoPlayer");
+        player.playbackRate = 1.5;
+
+player.onended = function(){
+
+    current++;
+
+    if(current < videos.length){
+
+        player.src = videos[current];
+        player.load();
+        player.play();
+
+    }else{
+
+        window.location.href = "{% url 'cake' %}";
+
+    }
+
+}
+
+    </script>
+
+</body>
+</html>

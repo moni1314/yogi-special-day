@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Wishes ❤️</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 180px;
+            height: 220px;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .card:hover {
+                transform: scale(1.08);
+            }
+
+            .card img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 15px;
+            }
+
+            .card h2 {
+                color: #ff3366;
+            }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            background: white;
+            width: 600px;
+            max-width: 90%;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.3);
+            display: none;
+            z-index: 100;
+            animation: zoom .4s;
+        }
+
+        @keyframes zoom {
+
+            from {
+                transform: translate(-50%,-50%) scale(.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%,-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup h2 {
+            color: #ff3366;
+            margin-bottom: 20px;
+        }
+
+        .popup p {
+            font-size: 20px;
+            line-height: 35px;
+            color: #444;
+        }
+
+        .close {
+            margin-top: 20px;
+            padding: 10px 25px;
+            border: none;
+            background: #ff3366;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .watch {
+            margin-top: 40px;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 40px;
+            background: #ff3366;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <audio id="bgMusic" autoplay loop>
+        <source src="{% static 'music/cake.mp3' %}" type="audio/mpeg">
+    </audio>
+    <script>
+
+        const music = document.getElementById("bgMusic");
+
+        window.onload = function () {
+
+            const savedTime = localStorage.getItem("cakeTime");
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            music.volume = 0.6;
+
+            music.play().catch(() => { });
+        };
+
+        setInterval(function () {
+
+            if (!music.paused) {
+                localStorage.setItem("cakeTime", music.currentTime);
+            }
+
+        }, 1000);
+    </script>
+        <div class="container">
+
+            <h1>❤️ Family Wishes ❤️</h1>
+
+            <div class="cards">
+                <div class="card" onclick="showWish('Appa')">
+                    <div style="font-size:70px;">❤️</div>
+                    <h2>Appa</h2>
+                </div>
+
+                <div class="card" onclick="showWish('Amma')">
+                    <div style="font-size:70px;">💖</div>
+                    <h2>Amma</h2>
+                </div>
+
+                <div class="card" onclick="showWish('Reshu')">
+                    <div style="font-size:70px;">💕</div>
+                    <h2>Reshu</h2>
+                </div>
+
+                <div class="card" onclick="showWish('Moni')">
+                    <div style="font-size:70px;">💝</div>
+                    <h2>Moni</h2>
+                </div>
+
+            </div>
+
+            <a href="{% url 'certificate' %}">
+                <button>🏆 Next ➜ Certificate</button>
+            </a>
+        </div>
+
+        <div class="popup" id="popup">
+
+            <h2 id="title"></h2>
+
+            <p id="message"></p>
+
+            <button class="close" onclick="closePopup()">Close</button>
+
+        </div>
+
+        <script>
+
+            function showWish(name) {
+
+                document.getElementById("popup").style.display = "block";
+
+                document.getElementById("title").innerHTML = "💌 " + name + " Wishes";
+
+                let msg = "";
+
+                if (name == "Appa") {
+
+                    msg = `Happy Birthday Yogi Ma ❤️<br><br>
+May God bless you with good health,
+happiness, success and a beautiful future.<br><br>
+
+Always keep smiling and stay happy.<br><br>
+
+❤️ With Love,<br>
+Appa ❤️`;
+
+                }
+
+                if (name == "Amma") {
+
+                    msg = `Happy Birthday Chello ❤️<br><br>
+Always stay happy,
+healthy and smiling.<br><br>
+- Amma ❤️`;
+
+                }
+
+                if (name == "Reshu") {
+
+                    msg = `Happy Birthday Yogi ❤️<br><br>
+You are the sweetest sister.
+Enjoy your special day!<br><br>
+- Reshu ❤️`;
+
+                }
+
+                if (name == "Moni") {
+
+                    msg = `Dear Yogi Ma ❤️<br><br>
+This website is my small gift for you.
+Thank you for being the best sister.
+May all your dreams come true.<br><br>
+Happy Birthday ❤️<br><br>
+Love You Always,<br>
+Moni ❤️`;
+
+                }
+
+                document.getElementById("message").innerHTML = msg;
+
+            }
+
+            function closePopup() {
+
+                document.getElementById("popup").style.display = "none";
+
+            }
+
+    </script>
+
+
+   
+</body>
+</html>

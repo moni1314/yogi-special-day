@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Cake 🎂</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        h1 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        #candle {
+            font-size: 70px;
+            cursor: pointer;
+            animation: flicker .5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from {
+                transform: rotate(-3deg);
+            }
+
+            to {
+                transform: rotate(3deg);
+            }
+        }
+
+        #cake {
+            font-size: 180px;
+            margin-top: -20px;
+        }
+
+        #message {
+            display: none;
+            margin-top: 20px;
+            font-size: 35px;
+            color: white;
+            font-weight: bold;
+            animation: pop .8s;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #nextBtn {
+            display: none;
+            margin-top: 30px;
+            padding: 15px 35px;
+            font-size: 22px;
+            border: none;
+            border-radius: 40px;
+            background: #ff4d6d;
+            color: white;
+            cursor: pointer;
+        }
+
+            #nextBtn:hover {
+                transform: scale(1.08);
+            }
+
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            top: -20px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="{% static 'music/cake.mp3' %}" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+
+        <h1>🎂 Make a Birthday Wish ❤️</h1>
+
+        <div id="candle">🕯️</div>
+
+        <div id="cake">🎂</div>
+
+        <div id="message">
+            🎉 Happy Birthday Yogi Ma ❤️ 🎉
+        </div>
+
+        <br><br>
+
+        <a href="{% url 'gift' %}">
+            <button id="nextBtn">
+                🎁 Next ➜ Digital Gift
+            </button>
+        </a>
+
+    </div>
+    <script>
+
+        const music = document.getElementById("bgMusic");
+        const candle = document.getElementById("candle");
+        const nextBtn = document.getElementById("nextBtn");
+        const message = document.getElementById("message");
+
+        window.onload = function () {
+
+            const savedTime = localStorage.getItem("cakeTime");
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            music.volume = 0.6;
+
+        }
+
+        candle.addEventListener("click", function () {
+
+            music.play();
+
+            candle.innerHTML = "💨";
+
+            message.style.display = "block";
+
+            for (let i = 0; i < 150; i++) {
+
+                let c = document.createElement("div");
+
+                c.className = "confetti";
+
+                c.style.left = Math.random() * 100 + "vw";
+
+                c.style.background = "hsl(" + Math.random() * 360 + ",100%,50%)";
+
+                c.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+                document.body.appendChild(c);
+
+                setTimeout(() => c.remove(), 5000);
+
+            }
+
+            setTimeout(function () {
+
+                nextBtn.style.display = "inline-block";
+
+            }, 2000);
+
+        }, { once: true });
+
+        setInterval(function () {
+
+            if (!music.paused) {
+
+                localStorage.setItem("cakeTime", music.currentTime);
+
+            }
+
+        }, 1000);
+
+    </script>
+
+</body>
+</html>

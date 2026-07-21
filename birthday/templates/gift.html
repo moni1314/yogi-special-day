@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Gift ❤️</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #gift {
+            font-size: 180px;
+            cursor: pointer;
+            transition: .5s;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        h1 {
+            color: white;
+            margin-top: 20px;
+            font-size: 40px;
+        }
+
+        #card {
+            display: none;
+            margin-top: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
+            animation: zoom .8s;
+        }
+
+        @keyframes zoom {
+
+            from {
+                transform: scale(.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #card h2 {
+            color: #ff3366;
+            margin-bottom: 20px;
+        }
+
+        #card p {
+            font-size: 22px;
+            line-height: 38px;
+            color: #444;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 15px 35px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            background: #ff3366;
+            color: white;
+            cursor: pointer;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 30px;
+            animation: floatUp linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <audio id="bgMusic" autoplay loop>
+        <source src="{% static 'music/cake.mp3' %}" type="audio/mpeg">
+    </audio>
+    <script>
+
+        const music = document.getElementById("bgMusic");
+
+        window.onload = function () {
+
+            const savedTime = localStorage.getItem("cakeTime");
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            music.volume = 0.6;
+
+            music.play().catch(() => { });
+        }
+
+        setInterval(function () {
+
+            localStorage.setItem("cakeTime", music.currentTime);
+
+        }, 1000);
+
+    </script>
+    <div class="container">
+
+        <div id="gift">🎁</div>
+
+        <h1>Click the Gift ❤️</h1>
+
+        <div id="card">
+
+            <h2>💝 Happy Birthday Yogi Ma 💝</h2>
+
+            <p>
+
+                May your life always be filled with
+
+                🌸 Happiness
+
+                💪 Good Health
+
+                😊 Endless Smiles
+
+                🎓 Success
+
+                ✨ Beautiful Memories
+
+                ❤️
+
+                Thank you for being
+
+                the best sister.
+
+                ❤️
+
+                With Lots of Love,
+
+                <b>Moni ❤️</b>
+
+            </p>
+
+            <a href="{% url 'family' %}">
+                <button>❤️ Family Wishes</button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const gift = document.getElementById("gift");
+
+        gift.onclick = function () {
+
+            gift.style.display = "none";
+
+            document.querySelector("h1").style.display = "none";
+
+            document.getElementById("card").style.display = "block";
+
+            for (let i = 0; i < 120; i++) {
+
+                let heart = document.createElement("div");
+
+                heart.className = "heart";
+
+                heart.innerHTML = ["❤️", "💖", "💕", "💗"][Math.floor(Math.random() * 4)];
+
+                heart.style.left = Math.random() * 100 + "vw";
+
+                heart.style.fontSize = (20 + Math.random() * 20) + "px";
+
+                heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Memories ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 25px;
+        }
+
+        #photo {
+            max-width: 90vw;
+            max-height: 70vh;
+            width: auto;
+            height: auto;
+            border-radius: 20px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,.3);
+            transition: opacity .8s ease;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 15px 35px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50px;
+            background: #ff4d6d;
+            color: white;
+            cursor: pointer;
+            display: none;
+            transition: .3s;
+        }
+
+            button:hover {
+                transform: scale(1.08);
+            }
+    </style>
+</head>
+
+<body>
+    <audio id="bgMusic" autoplay loop>
+        <source src="{% static 'music/gallery.mp3' %}" type="audio/mpeg">
+    </audio>
+    <script>
+        const music = document.getElementById("bgMusic");
+
+        music.volume = 0.5;
+
+        window.addEventListener("load", function () {
+            music.play().catch(() => { });
+        });
+
+        document.body.addEventListener("click", function () {
+            music.play();
+        }, { once: true });
+    </script>
+
+    <div class="container">
+
+        <h1>📸 Beautiful Memories ❤️</h1>
+
+        <img id="photo" src="{% static 'images/photo1.jpg' %}" alt="Photo">
+
+        <br>
+
+        <a href="{% url 'video' %}">
+            <button id="nextBtn">🎥 Next ➜ Birthday Video</button>
+        </a>
+
+    </div>
+
+    <script>
+
+        const photos = [
+
+            "{% static 'images/photo1.jpg' %}",
+            "{% static 'images/photo22.jpg' %}",
+            "{% static 'images/photo3.jpg' %}",
+            "{% static 'images/photo4.jpg' %}",
+            "{% static 'images/photo5.jpg' %}",
+            "{% static 'images/photo6.jpg' %}",
+            "{% static 'images/photo7.jpg' %}",
+            "{% static 'images/photo8.jpg' %}",
+            "{% static 'images/photo9.jpg' %}",
+            "{% static 'images/photo10.jpg' %}",
+            "{% static 'images/photo11.jpg' %}",
+            "{% static 'images/photo12.jpg' %}",
+            "{% static 'images/photo13.jpg' %}",
+            "{% static 'images/photo14.jpg' %}",
+            "{% static 'images/photo15.jpg' %}",
+            "{% static 'images/photo16.jpg' %}",
+            "{% static 'images/photo17.jpg' %}",
+            "{% static 'images/photo28.jpg' %}",
+            "{% static 'images/photo19.jpg' %}",
+            "{% static 'images/photo20.jpg' %}"
+
+        ];
+
+        let i = 0;
+
+        const img = document.getElementById("photo");
+        const nextBtn = document.getElementById("nextBtn");
+
+        function changePhoto() {
+
+            i++;
+
+            if (i >= photos.length) {
+
+                nextBtn.style.display = "inline-block";
+                return;
+
+            }
+
+            img.style.opacity = 0;
+
+            setTimeout(function () {
+
+                img.src = photos[i];
+                img.style.opacity = 1;
+
+            }, 400);
+
+        }
+
+        setInterval(changePhoto, 4000);
+
+    </script>
+
+</body>
+</html>

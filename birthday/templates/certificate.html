@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Of Love ❤️</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial,sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg,#ffd6e7,#ff9db5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .certificate {
+            width: 700px;
+            max-width: 95%;
+            background: #fffdf5;
+            padding: 35px;
+            border: 10px solid gold;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0,0,0,.35);
+            animation: zoom 0.8s;
+            margin: 20px auto;
+        }
+        @keyframes zoom {
+
+            from {
+                transform: scale(.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 38px;
+        }
+
+        .name {
+            font-size: 42px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 35px;
+        }
+
+        .love {
+            font-size: 28px;
+        }
+
+        .footer {
+            font-size: 20px;
+        }
+
+        button {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-size: 22px;
+            border: none;
+            border-radius: 40px;
+            background: #ff4d6d;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+            button:hover {
+                transform: scale(1.08);
+            }
+
+        .heart {
+            position: fixed;
+            font-size: 30px;
+            top: -40px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+
+            to {
+                transform: translateY(110vh);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <audio id="bgMusic" autoplay loop>
+        <source src="{% static 'music/cake.mp3' %}" type="audio/mpeg">
+    </audio>
+
+    <div class="certificate">
+
+        <h1>🏆 CERTIFICATE OF LOVE 🏆</h1>
+
+        <p>This Certificate is Proudly Presented To</p>
+
+        <div class="name">💖 YOGI MA 💖</div>
+
+        <p>
+
+            For being the most loving,<br>
+
+            caring and wonderful sister ❤️<br><br>
+
+            May your life always be filled with<br>
+
+            🌸 Happiness<br>
+
+            💪 Good Health<br>
+
+            🎓 Success<br>
+
+            😊 Endless Smiles<br>
+
+            ✨ Beautiful Memories
+
+        </p>
+
+        <div class="love">
+
+            ❤️ HAPPY BIRTHDAY ❤️
+
+        </div>
+
+        <p style="margin-top:25px;">
+
+            This surprise was made especially for you.
+
+        </p>
+
+        <div class="footer">
+
+            ❤️ With Lots Of Love ❤️<br><br>
+
+            <b>Moni & Reshu</b>
+
+        </div>
+        <a href="{% url 'home' %}" onclick="localStorage.removeItem('cakeTime')">
+            <button>
+                🏠 Finish
+            </button>
+        </a>
+
+    </div>
+    <script>
+
+        const music = document.getElementById("bgMusic");
+
+        window.onload = function () {
+
+            const savedTime = localStorage.getItem("cakeTime");
+
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            music.volume = 0.6;
+
+            music.play().catch(() => { });
+        };
+
+        setInterval(function () {
+
+            if (!music.paused) {
+                localStorage.setItem("cakeTime", music.currentTime);
+            }
+
+        }, 1000);
+
+    </script>
+    <script>
+
+        function createHeart() {
+
+            let heart = document.createElement("div");
+
+            heart.className = "heart";
+
+            heart.innerHTML = "❤️";
+
+            heart.style.left = Math.random() * 100 + "vw";
+
+            heart.style.fontSize = (20 + Math.random() * 25) + "px";
+
+            heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+
+        }
+
+        setInterval(createHeart, 300);
+
+    </script>
+
+</body>
+</html>
